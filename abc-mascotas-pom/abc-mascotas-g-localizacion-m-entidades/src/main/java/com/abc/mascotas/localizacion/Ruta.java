@@ -12,21 +12,20 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "MASCOTA")
-public class Mascota {
+@Table(name = "RUTA")
+public class Ruta {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ID")
 	private Long id;
-
+	
+	@Column(name="DISTANCIA")
+	private double distancia;
+	
 	@Column(name="NOMBRE")
 	private String nombre;
-	
-	@Column(name="FECHANACIMIENTO")
-	@Temporal(TemporalType.DATE)
-	private Calendar fechaNacimiento;
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -35,19 +34,19 @@ public class Mascota {
 		this.id = id;
 	}
 
+	public double getDistancia() {
+		return distancia;
+	}
+
+	public void setDistancia(double distancia) {
+		this.distancia = distancia;
+	}
+
 	public String getNombre() {
 		return nombre;
 	}
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	public Calendar getFechaNacimiento() {
-		return fechaNacimiento;
-	}
-
-	public void setFechaNacimiento(Calendar fechaNacimiento) {
-		this.fechaNacimiento = fechaNacimiento;
 	}
 }

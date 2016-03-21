@@ -2,10 +2,17 @@ package com.abc.mascotas.dtos;
 
 public class RespuestaDto{
 
-	private String mensaje;
-	
-	private String resultado;
+	protected Integer codigoMensaje;
+	protected String mensaje;
+	protected String resultado;
 
+	public Integer getCodigoMensaje() {
+		return codigoMensaje;
+	}
+	public void setCodigoMensaje(Integer codigoMensaje) {
+		this.codigoMensaje = codigoMensaje;
+	}
+	
 	public String getMensaje() {
 		return mensaje;
 	}

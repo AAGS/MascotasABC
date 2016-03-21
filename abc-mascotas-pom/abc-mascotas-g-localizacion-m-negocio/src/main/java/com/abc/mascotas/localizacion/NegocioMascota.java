@@ -67,6 +67,7 @@ public class NegocioMascota {
 				resultadoMascotaDto.setNombreMascota(p.getRuta().getMascota().getNombre());
 				resultadoMascotaDto.setIdRuta(p.getRuta().getId());
 				resultadoMascotaDto.setNombreRuta(p.getRuta().getNombre());
+				resultadoMascotaDto.setIdPosicion(p.getId());
 			}else{
 				resultadoMascotaDto.setCodigoMensaje(2);
 				resultadoMascotaDto.setMensaje("No hay posicion para esta mascota");

@@ -1,5 +1,6 @@
 package com.abc.mascotas.dtos;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class RespuestaMascotaDto extends RespuestaDto{
@@ -8,7 +9,9 @@ public class RespuestaMascotaDto extends RespuestaDto{
 	private double longitud;
 	private double latitud;
 	private Long idRuta;
+	private Long idPosicion;
 	private String nombreRuta;
+	private String strFechaUltimaPosicion;
 	
 	public String getNombreMascota() {
 		return nombreMascota;
@@ -45,5 +48,22 @@ public class RespuestaMascotaDto extends RespuestaDto{
 	}
 	public void setNombreRuta(String nombreRuta) {
 		this.nombreRuta = nombreRuta;
+	}
+	public Long getIdPosicion() {
+		return idPosicion;
+	}
+	public void setIdPosicion(Long idPosicion) {
+		this.idPosicion = idPosicion;
+	}
+	public String getStrFechaUltimaPosicion() {
+		if (fechaUltimaPosicion != null){
+			String formato = "dd-MM-yyyy HH:mm:ss ";
+			SimpleDateFormat format = new SimpleDateFormat(formato);
+			this.strFechaUltimaPosicion = format.format(fechaUltimaPosicion.getTime());
+		}
+		return strFechaUltimaPosicion;
+	}
+	public void setStrFechaUltimaPosicion(String strFechaUltimaPosicion) {
+		this.strFechaUltimaPosicion = strFechaUltimaPosicion;
 	}
 }

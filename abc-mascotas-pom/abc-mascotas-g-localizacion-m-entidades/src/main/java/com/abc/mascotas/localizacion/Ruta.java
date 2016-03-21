@@ -31,7 +31,7 @@ public class Ruta {
 	@JoinColumn(name="ID_MASCOTA")
 	private Mascota mascota;
 	
-	@OneToMany(mappedBy = "mascota")
+	@OneToMany(mappedBy = "ruta")
 	private List<Punto> puntos;
 	
 	public Long getId() {

@@ -7,6 +7,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
 import com.abc.mascotas.dtos.InformacionMascotaDto;
+import com.abc.mascotas.dtos.RespuestaDto;
 import com.abc.mascotas.localizacion.NegocioMascota;
 
 @Path(value="Mascota")
@@ -18,9 +19,15 @@ public class ServicioMascota {
 	@POST
 	@Path("guardar")
 	@Consumes("application/json")
-	@Produces("text/plain")	
-	public String guardarInformacion(InformacionMascotaDto informacionMascotaDto){
-		negocioMascota.guardar(informacionMascotaDto);
-		return "OK";
+	@Produces("application/json")	
+	public RespuestaDto guardarInformacion(InformacionMascotaDto informacionMascotaDto){
+		Boolean res = negocioMascota.guardar(informacionMascotaDto);
+		RespuestaDto respuesta = new RespuestaDto();
+		if(res)
+		{
+			respuesta.setResultado("Ok");
+			respuesta.setMensaje("Información registrada con exito");		
+		}
+		return respuesta;
 	}
 }

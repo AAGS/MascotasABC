@@ -18,6 +18,8 @@ public class InformacionMascotaDto{
 	
 	private String frecuenciaRespiratoria;
 
+	private Long idRuta;
+	
 	public Long getId() {
 		return id;
 	}
@@ -26,6 +28,14 @@ public class InformacionMascotaDto{
 		this.id = id;
 	}
 
+	public Long getIdRuta() {
+		return idRuta;
+	}
+
+	public void setIdRuta(Long id) {
+		this.idRuta = id;
+	}
+	
 	public double getLongitud() {
 		return longitud;
 	}

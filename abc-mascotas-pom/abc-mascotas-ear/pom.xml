@@ -20,6 +20,7 @@
 						<webModule>
 							<groupId>com.abc.mascotas</groupId>
 							<artifactId>abc-mascotas-g-localizacion-m</artifactId>
+							<contextRoot>/abc-mascotas</contextRoot>
 						</webModule>
 					</modules>
 				</configuration>

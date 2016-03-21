@@ -10,72 +10,75 @@
 	<packaging>ear</packaging>
 
 	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>properties-maven-plugin</artifactId>
-					<version>1.0-alpha-2</version>
-					<executions>
-						<execution>
-							<phase>initialize</phase>
-							<goals>
-								<goal>read-project-properties</goal>
-							</goals>
-							<configuration>
-								<files>
-									<file>${basedir}/src/main/resources/user_conf.properties</file>
-								</files>
-							</configuration>
-						</execution>
-					</executions>
-				</plugin>
-
-				<plugin>
-					<artifactId>maven-ear-plugin</artifactId>
-					<version>2.10</version>
-					<configuration>
-						<defaultLibBundleDir>lib</defaultLibBundleDir>
-						<modules>
-							<webModule>
-								<groupId>com.abc.mascotas</groupId>
-								<artifactId>abc-mascotas-g-localizacion-m</artifactId>
-								<contextRoot>/abc-mascotas</contextRoot>
-							</webModule>
-						</modules>
-					</configuration>
-				</plugin>
-
-				<plugin>
-					<artifactId>maven-antrun-plugin</artifactId>
-					<version>1.8</version>
-					<executions>
-						<execution>
-							<phase>install</phase>
-							<goals>
-								<goal>run</goal>
-							</goals>
-							<configuration>
-								<target>
-									<copy todir="${server.dir}\modules\system\layers\base\com\mysql\main">
-										<fileset
-											dir="${project.src}\abc-mascotas-ear\src\main\resources\mysql" />
-									</copy>
-									<copy overwrite="true" todir="${server.dir}\standalone\configuration">
-										<fileset
-											file="${project.src}\abc-mascotas-ear\src/main/resources/standalone.xml" />
-									</copy>
-									<replace
-										file="${server.dir}\standalone\configuration\standalone.xml"
-										replacefilterfile="${project.src}/abc-mascotas-ear/src/main/resources/user_conf.properties" />
-								</target>
-							</configuration>
-						</execution>
-					</executions>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>1.0-alpha-2</version>
+				<executions>
+					<execution>
+						<phase>initialize</phase>
+						<goals>
+							<goal>read-project-properties</goal>
+						</goals>
+						<configuration>
+							<files>
+								<file>${basedir}/src/main/resources/user_conf.properties</file>
+							</files>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<artifactId>maven-ear-plugin</artifactId>
+				<version>2.10</version>
+				<configuration>
+<!-- 						<outputDirectory>C:/prueba/${project.build.directory}/${project.build.finalName}.ear</outputDirectory> -->
+					<defaultLibBundleDir>lib</defaultLibBundleDir>
+					<modules>
+						<webModule>
+							<groupId>com.abc.mascotas</groupId>
+							<artifactId>abc-mascotas-g-localizacion-m</artifactId>
+							<contextRoot>/abc-mascotas</contextRoot>
+						</webModule>
+					</modules>
+				</configuration>
+			</plugin>
+				
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<copy todir="${server.dir}\modules\system\layers\base\com\mysql\main">
+									<fileset
+										dir="${project.src}\abc-mascotas-ear\src\main\resources\mysql" />
+								</copy>
+								<copy overwrite="true" todir="${server.dir}\standalone\configuration">
+									<fileset
+										file="${project.src}\abc-mascotas-ear\src/main/resources/standalone.xml" />
+								</copy>
+								<copy overwrite="true" todir="${server.dir}/standalone/deployments">
+									<fileset
+										file="${project.build.directory}/${project.build.finalName}.ear" />
+								</copy>
+								<replace
+									file="${server.dir}\standalone\configuration\standalone.xml"
+									replacefilterfile="${project.src}/abc-mascotas-ear/src/main/resources/user_conf.properties" />
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>

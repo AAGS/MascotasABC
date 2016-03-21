@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,7 +29,7 @@ public class Punto {
 	private double latitud;
 	
 	@Column(name="FECHA")
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar fecha;
 
 	@Column(name = "LUGAR")
@@ -39,6 +41,10 @@ public class Punto {
 	@Column(name = "FRECUENCIARESPIRATORIA")
 	private String frecuenciaRespiratoria;
 
+	@ManyToOne
+	@JoinColumn(name = "ID_MASCOTA")
+	private Mascota mascota;
+	
 	public Long getId() {
 		return id;
 	}
@@ -94,5 +100,12 @@ public class Punto {
 	public void setFrecuenciaRespiratoria(String frecuenciaRespiratoria) {
 		this.frecuenciaRespiratoria = frecuenciaRespiratoria;
 	}
-	
+
+	public Mascota getMascota() {
+		return mascota;
+	}
+
+	public void setMascota(Mascota mascota) {
+		this.mascota = mascota;
+	}
 }

@@ -18,33 +18,33 @@ import javax.persistence.TemporalType;
 public class Punto {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="ID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID")
 	private Long id;
-	
-	@Column(name="LONGITUD")
+
+	@Column(name = "LONGITUD")
 	private double longitud;
-	
-	@Column(name="LATITUD")
+
+	@Column(name = "LATITUD")
 	private double latitud;
-	
-	@Column(name="FECHA")
+
+	@Column(name = "FECHA")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar fecha;
 
 	@Column(name = "LUGAR")
 	private String lugar;
-	
+
 	@Column(name = "RITMOCARDIACO")
 	private String ritmoCardiaco;
-	
+
 	@Column(name = "FRECUENCIARESPIRATORIA")
 	private String frecuenciaRespiratoria;
 
 	@ManyToOne
-	@JoinColumn(name = "ID_MASCOTA")
-	private Mascota mascota;
-	
+	@JoinColumn(name = "ID_RUTA")
+	private Ruta ruta;
+
 	public Long getId() {
 		return id;
 	}
@@ -101,11 +101,11 @@ public class Punto {
 		this.frecuenciaRespiratoria = frecuenciaRespiratoria;
 	}
 
-	public Mascota getMascota() {
-		return mascota;
+	public Ruta getRuta() {
+		return ruta;
 	}
 
-	public void setMascota(Mascota mascota) {
-		this.mascota = mascota;
+	public void setRuta(Ruta ruta) {
+		this.ruta = ruta;
 	}
 }

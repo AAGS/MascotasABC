@@ -1,12 +1,12 @@
 package com.abc.mascotas.localizacion.servicios;
 
+
 import javax.ejb.EJB;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import com.abc.mascotas.dtos.InformacionMascotaDto;
 import com.abc.mascotas.dtos.RespuestaMascotaDto;
 import com.abc.mascotas.localizacion.NegocioMascota;
 

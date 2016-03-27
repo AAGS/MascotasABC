@@ -38,5 +38,6 @@
 		<module>abc-mascotas-negocio</module>
 		<module>abc-mascotas-entidades</module>
 		<module>abc-mascotas-util</module>
+		<module>abc-mascotas-consultor</module>
 	</modules>
 </project>

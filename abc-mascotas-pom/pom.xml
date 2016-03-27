@@ -34,10 +34,9 @@
 	</dependencies>
 	
 	<modules>
-		<module>abc-mascotas-ear</module>
-		<module>abc-mascotas-g-localizacion-m</module>
-		<module>abc-mascotas-g-localizacion-m-negocio</module>
-		<module>abc-mascotas-g-localizacion-m-entidades</module>
-		<module>abc-mascotas-g-localizacion-m-util</module>
+		<module>abc-mascotas-receptor</module>
+		<module>abc-mascotas-negocio</module>
+		<module>abc-mascotas-entidades</module>
+		<module>abc-mascotas-util</module>
 	</modules>
 </project>

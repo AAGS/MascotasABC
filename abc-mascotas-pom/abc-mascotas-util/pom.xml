@@ -5,12 +5,5 @@
     <artifactId>abc-mascotas-pom</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-  <artifactId>abc-mascotas-g-localizacion-m-entidades</artifactId>
-  <dependencies>
-  	<dependency>
-  		<groupId>com.abc.mascotas</groupId>
-  		<artifactId>abc-mascotas-g-localizacion-m-util</artifactId>
-  		<version>1.0-SNAPSHOT</version>
-  	</dependency>
-  </dependencies>
+  <artifactId>abc-mascotas-util</artifactId>
 </project>

@@ -6,33 +6,30 @@
 		<artifactId>abc-mascotas-pom</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>abc-mascotas-g-localizacion-m-negocio</artifactId>
-	<packaging>ejb</packaging>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-ejb-plugin</artifactId>
-				<version>2.5.1</version>
-				<configuration>
-					<ejbVersion>3.1</ejbVersion>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+	<artifactId>abc-mascotas-receptor</artifactId>
+	<packaging>war</packaging>
 
 	<dependencies>
 		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+			<version>2.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>com.abc.mascotas</groupId>
-			<artifactId>
-  			abc-mascotas-g-localizacion-m-entidades
-  		</artifactId>
+			<artifactId>abc-mascotas-negocio</artifactId>
+			<version>1.0-SNAPSHOT</version>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>com.abc.mascotas</groupId>
+			<artifactId>abc-mascotas-entidades</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.abc.mascotas</groupId>
-			<artifactId>abc-mascotas-g-localizacion-m-util</artifactId>
+			<artifactId>abc-mascotas-util</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>

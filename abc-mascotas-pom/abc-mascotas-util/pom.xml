@@ -50,11 +50,11 @@
 								</copy>
 								<copy overwrite="true" todir="${server.dir}\standalone\deployments">
 									<fileset
-										file="../abc-mascotas-consultor/target/abc-mascotas-consultor-1.0-SNAPSHOT.war" />
+										file="../abc-mascotas-consultor/target/abc-mascotas-consultor.war" />
 								</copy>
 								<copy overwrite="true" todir="${server.dir}\standalone\deployments">
 									<fileset
-										file="../abc-mascotas-receptor/target/abc-mascotas-receptor-1.0-SNAPSHOT.war" />
+										file="../abc-mascotas-receptor/target/abc-mascotas-receptor.war" />
 								</copy>
 								<replace file="${server.dir}\standalone\configuration\standalone.xml"
 									replacefilterfile="${project.src}/src/main/resources/user_conf.properties" />

@@ -8,9 +8,66 @@
 	</parent>
 	<artifactId>abc-mascotas-consultor</artifactId>
 	<packaging>war</packaging>
+
 	<build>
 		<finalName>${artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>1.0-alpha-2</version>
+				<executions>
+					<execution>
+						<id>initialize-config</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>read-project-properties</goal>
+						</goals>
+						<configuration>
+							<files>
+								<file>../src/main/resources/user_conf.properties</file>
+							</files>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<copy overwrite="true"
+									todir="${server.dir}\modules\system\layers\base\com\mysql\main">
+									<fileset dir="${project.src}\src\main\resources\mysql" />
+								</copy>
+								<copy overwrite="true" todir="${server.dir}\standalone\configuration">
+									<fileset file="${project.src}/src/main/resources/standalone.xml" />
+								</copy>
+								<copy overwrite="true" todir="${server.dir}\standalone\deployments">
+									<fileset
+										file="../abc-mascotas-consultor/target/abc-mascotas-consultor.war" />
+								</copy>
+								<copy overwrite="true" todir="${server.dir}\standalone\deployments">
+									<fileset
+										file="../abc-mascotas-receptor/target/abc-mascotas-receptor.war" />
+								</copy>
+								<replace file="${server.dir}\standalone\configuration\standalone.xml"
+									replacefilterfile="${project.src}/src/main/resources/user_conf.properties" />
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
 	</build>
+
 
 	<dependencies>
 		<dependency>

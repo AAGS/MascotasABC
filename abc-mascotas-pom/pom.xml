@@ -23,7 +23,7 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>javax</groupId>
@@ -31,8 +31,13 @@
 			<version>6.0</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
 	</dependencies>
-	
+
 	<modules>
 		<module>abc-mascotas-receptor</module>
 		<module>abc-mascotas-negocio</module>

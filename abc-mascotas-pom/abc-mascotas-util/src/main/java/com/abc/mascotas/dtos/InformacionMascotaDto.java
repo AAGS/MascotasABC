@@ -83,5 +83,11 @@ public class InformacionMascotaDto{
 	public void setFrecuenciaRespiratoria(String frecuenciaRespiratoria) {
 		this.frecuenciaRespiratoria = frecuenciaRespiratoria;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "InformacionMascotaDto [id=" + id + ", longitud=" + longitud + ", latitud=" + latitud + ", fecha="
+				+ fecha + ", lugar=" + lugar + ", ritmoCardiaco=" + ritmoCardiaco + ", frecuenciaRespiratoria="
+				+ frecuenciaRespiratoria + ", idRuta=" + idRuta + "]";
+	}
 }

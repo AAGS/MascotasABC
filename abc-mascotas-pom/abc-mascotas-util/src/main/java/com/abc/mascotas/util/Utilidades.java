@@ -34,7 +34,7 @@ public class Utilidades {
 	public static boolean esCorrectoFrecuenciaRespiratoria(String frecuenciaRespiratoria) {
 		try {
 			double frecuencia = Double.parseDouble(frecuenciaRespiratoria);
-			return frecuencia > FRECUENCIA_RESPIRATORIA_MIN && frecuencia <= FRECUENCIA_RESPIRATORIA_MIN;
+			return frecuencia > FRECUENCIA_RESPIRATORIA_MIN && frecuencia <= FRECUENCIA_RESPIRATORIA_MAX;
 		} catch (NumberFormatException nfe) {
 			return false;
 		}

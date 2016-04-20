@@ -19,7 +19,7 @@ public class Utilidades {
 	}
 
 	public static boolean esValidoLatitud(double latitud) {
-		return latitud > LATITUD_MAX && latitud <= LATITUD_MAX;
+		return latitud >= LATITUD_MIN && latitud <= LATITUD_MAX;
 	}
 
 	public static boolean esCorrectoRitmoCardiaco(String ritmoCardiaco) {

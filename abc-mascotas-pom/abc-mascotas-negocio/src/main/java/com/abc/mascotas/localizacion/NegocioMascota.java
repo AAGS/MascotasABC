@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -14,6 +15,7 @@ import org.apache.log4j.Logger;
 
 import com.abc.mascotas.dtos.InformacionMascotaDto;
 import com.abc.mascotas.dtos.RespuestaMascotaDto;
+import com.abc.mascotas.enums.UsuarioAutenticado;
 import com.abc.mascotas.util.Utilidades;
 
 @Stateless
@@ -31,12 +33,12 @@ public class NegocioMascota {
 	@EJB
 	private NegocioLog negocioLog;
 
-	public Boolean guardar(InformacionMascotaDto informacionMascotaDto) {
-		Boolean exito = false;
+	@Interceptors({VerificarAutenticacion.class})
+	public RespuestaMascotaDto guardar(InformacionMascotaDto informacionMascotaDto) {
 		Boolean validacion = true;
 		Punto punto = new Punto();
 		LogPeticionesFallidas logPeticionesFallidas = null;
-
+		RespuestaMascotaDto respuestaMascotaDto = new RespuestaMascotaDto();
 		try {
 			Ruta ruta = negocioRuta.obtenerRutaPorId(informacionMascotaDto.getIdRuta());
 			String mensaje = "";
@@ -63,16 +65,17 @@ public class NegocioMascota {
 			} else {
 				mappingDtoToPunto(informacionMascotaDto, punto, ruta);
 				em.persist(punto);
-				exito = true;
+				mensaje = UsuarioAutenticado.SI.name();
 			}
+			respuestaMascotaDto.setMensaje(mensaje);
 		} catch (Exception e) {
 			logPeticionesFallidas = construirObjetoLog("guardar", informacionMascotaDto.toString(),
 					"Error excepcion " + e.getMessage());
 			negocioLog.guardar(logPeticionesFallidas);
 			LOG.log(Level.ERROR, "Error " + e.getMessage(), e);
+			respuestaMascotaDto.setMensaje(e.getMessage());
 		}
-
-		return exito;
+		return respuestaMascotaDto;
 	}
 
 	private void mappingDtoToPunto(InformacionMascotaDto informacionMascotaDto, Punto punto, Ruta ruta) {
@@ -85,39 +88,45 @@ public class NegocioMascota {
 		punto.setRuta(ruta);
 	}
 
-	public RespuestaMascotaDto consultarPosicionActual(Long idRuta) {
+	@Interceptors({VerificarAutenticacion.class})
+	public RespuestaMascotaDto consultarPosicionActual(InformacionMascotaDto informacionMascotaDto) {
 		LogPeticionesFallidas logPeticionesFallidas;
 		RespuestaMascotaDto resultadoMascotaDto = new RespuestaMascotaDto();
 		resultadoMascotaDto.setCodigoMensaje(0);
 		resultadoMascotaDto.setMensaje("OK");
-		Ruta ruta = negocioRuta.obtenerRutaPorId(idRuta);
-		if (ruta != null) {
-			TypedQuery<Punto> typedQuery = em
-					.createQuery("SELECT p FROM Punto p WHERE p.ruta.id = :idRuta ORDER BY p.fecha DESC ", Punto.class);
-			typedQuery.setParameter("idRuta", idRuta);
-			List<Punto> punto = typedQuery.setMaxResults(1).getResultList();
-			if (punto != null && !punto.isEmpty()) {
-				Punto p = punto.get(0);
-				resultadoMascotaDto.setFechaUltimaPosicion(p.getFecha());
-				resultadoMascotaDto.setLongitud(p.getLongitud());
-				resultadoMascotaDto.setLatitud(p.getLatitud());
-				resultadoMascotaDto.setNombreMascota(p.getRuta().getMascota().getNombre());
-				resultadoMascotaDto.setIdRuta(p.getRuta().getId());
-				resultadoMascotaDto.setNombreRuta(p.getRuta().getNombre());
-				resultadoMascotaDto.setIdPosicion(p.getId());
+		if (informacionMascotaDto.getIdRuta() != null){
+			Ruta ruta = negocioRuta.obtenerRutaPorId(informacionMascotaDto.getIdRuta());
+			if (ruta != null) {
+				TypedQuery<Punto> typedQuery = em
+						.createQuery("SELECT p FROM Punto p WHERE p.ruta.id = :idRuta ORDER BY p.fecha DESC ", Punto.class);
+				typedQuery.setParameter("idRuta", informacionMascotaDto.getIdRuta());
+				List<Punto> punto = typedQuery.setMaxResults(1).getResultList();
+				if (punto != null && !punto.isEmpty()) {
+					Punto p = punto.get(0);
+					resultadoMascotaDto.setFechaUltimaPosicion(p.getFecha());
+					resultadoMascotaDto.setLongitud(p.getLongitud());
+					resultadoMascotaDto.setLatitud(p.getLatitud());
+					resultadoMascotaDto.setNombreMascota(p.getRuta().getMascota().getNombre());
+					resultadoMascotaDto.setIdRuta(p.getRuta().getId());
+					resultadoMascotaDto.setNombreRuta(p.getRuta().getNombre());
+					resultadoMascotaDto.setIdPosicion(p.getId());
+				} else {
+					logPeticionesFallidas = construirObjetoLog("consultarPosicionActual", informacionMascotaDto.getIdRuta().toString(),
+							"No hay posiscion para esta mascota");
+					negocioLog.guardar(logPeticionesFallidas);
+					resultadoMascotaDto.setCodigoMensaje(2);
+					resultadoMascotaDto.setMensaje("No hay posicion para esta mascota");
+				}
 			} else {
-				logPeticionesFallidas = construirObjetoLog("consultarPosicionActual", idRuta.toString(),
-						"No hay posiscion para esta mascota");
+				logPeticionesFallidas = construirObjetoLog("consultarPosicionActual", informacionMascotaDto.getIdRuta().toString(),
+						"La ruta no existe en el sistema");
 				negocioLog.guardar(logPeticionesFallidas);
-				resultadoMascotaDto.setCodigoMensaje(2);
-				resultadoMascotaDto.setMensaje("No hay posicion para esta mascota");
+				resultadoMascotaDto.setCodigoMensaje(1);
+				resultadoMascotaDto.setMensaje("La ruta no existe en el sistema");
 			}
-		} else {
-			logPeticionesFallidas = construirObjetoLog("consultarPosicionActual", idRuta.toString(),
-					"La ruta no existe en el sistema");
-			negocioLog.guardar(logPeticionesFallidas);
-			resultadoMascotaDto.setCodigoMensaje(1);
-			resultadoMascotaDto.setMensaje("La ruta no existe en el sistema");
+		}else{
+			resultadoMascotaDto.setCodigoMensaje(3);
+			resultadoMascotaDto.setMensaje("Falta id de la ruta");
 		}
 		return resultadoMascotaDto;
 	}

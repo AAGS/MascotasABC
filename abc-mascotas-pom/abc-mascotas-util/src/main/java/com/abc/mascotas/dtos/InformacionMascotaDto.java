@@ -20,6 +20,10 @@ public class InformacionMascotaDto{
 
 	private Long idRuta;
 	
+	private String login;
+	
+	private String password;
+	
 	public Long getId() {
 		return id;
 	}
@@ -82,6 +86,22 @@ public class InformacionMascotaDto{
 
 	public void setFrecuenciaRespiratoria(String frecuenciaRespiratoria) {
 		this.frecuenciaRespiratoria = frecuenciaRespiratoria;
+	}
+	
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override

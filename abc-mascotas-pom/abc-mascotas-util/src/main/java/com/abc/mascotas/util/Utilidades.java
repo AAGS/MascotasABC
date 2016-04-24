@@ -1,5 +1,8 @@
 package com.abc.mascotas.util;
 
+import com.abc.mascotas.enums.UsuarioAutenticado;
+import com.abc.mascotas.excepciones.EncripcionNoValidaException;
+
 public class Utilidades {
 
 	public static final double LONGITUD_MAX = 94;
@@ -37,6 +40,16 @@ public class Utilidades {
 			return frecuencia > FRECUENCIA_RESPIRATORIA_MIN && frecuencia <= FRECUENCIA_RESPIRATORIA_MAX;
 		} catch (NumberFormatException nfe) {
 			return false;
+		}
+	}
+
+	public static UsuarioAutenticado verificarPwd(String passwordBD, String passwordPeticion) throws EncripcionNoValidaException {
+		String passwordPeticionDes = UtilidadesEncripcionAES.desencriptar(passwordPeticion);
+		String passwordBDDes = UtilidadesEncripcionAES.desencriptar(passwordBD);
+		if (passwordBDDes.equals(passwordPeticionDes)){
+			return UsuarioAutenticado.SI;
+		}else{
+			return UsuarioAutenticado.NO;
 		}
 	}
 }

@@ -13,10 +13,19 @@ function iniciar() {
 }
 
 function dibujarPosicionMascota(){
+	var data = {
+		  	 "login":"usuario1",
+		  	 "password":"3V0kt+hsqcgIMoM0RERNMg==",
+		  	 "idRuta":3
+			};
 	$.ajax({
-			url: "rest/ConsultaMascota/posicionActual/3", 
-			type: 'GET',
-			dataType: "json",	
+			url: "rest/ConsultaMascota/posicionActual", 
+			type: 'POST',
+			headers: { 
+			        	'Accept': 'application/json',
+			        	'Content-Type': 'application/json' 
+			    		},
+			data: JSON.stringify(data),
 			success: function(resultado){
 						var puntoMascota = resultado;
 						if (puntoMascota != null ){
@@ -26,10 +35,11 @@ function dibujarPosicionMascota(){
 								    map: mapa,
 								    title: puntoMascota.nombreMascota
 								  });
+							  marker.position;
 						}
 					 },
 			error: function (request, status, error) {
-			      		alert(request.responseText);
-				   }
+						console.log(error);
+					}
 	}); 
 }

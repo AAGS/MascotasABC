@@ -21,13 +21,6 @@ public class ServicioMascota {
 	@Consumes("application/json")
 	@Produces("application/json")	
 	public RespuestaDto guardarInformacion(InformacionMascotaDto informacionMascotaDto){
-		Boolean res = negocioMascota.guardar(informacionMascotaDto);
-		RespuestaDto respuesta = new RespuestaDto();
-		if(res)
-		{
-			respuesta.setResultado("Ok");
-			respuesta.setMensaje("Información registrada con exito");		
-		}
-		return respuesta;
+		return negocioMascota.guardar(informacionMascotaDto);
 	}
 }
